@@ -28,7 +28,7 @@ RUN apt-get update \
             libbsd-dev" \
     && apt-get install -y --no-install-recommends --no-install-suggests $buildDeps \
     # Download libssl1.0.2
-    && curl -fL -o /tmp/libssl1.0.2_amd64.deb http://ftp.br.debian.org/debian/pool/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u1_amd64.deb \
+    && curl -fL -o /tmp/libssl1.0.2_amd64.deb http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u2_amd64.deb \
     && dpkg -i /tmp/libssl1.0.2_amd64.deb \
     # Download and prepare OpenDKIM sources
     && curl -fL -o /tmp/opendkim.tar.gz https://downloads.sourceforge.net/project/opendkim/opendkim-2.10.3.tar.gz \
