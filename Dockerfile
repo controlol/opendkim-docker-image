@@ -14,8 +14,7 @@ RUN apt-get update \
     && update-ca-certificates \
     # Install OpenDKIM dependencies
     && apt-get install -y --no-install-recommends --no-install-suggests \
-                #newer version does not work with opendkim yet
-                #libssl1.1 \
+                libssl1.1 \
                 libmilter1.0.1 \
                 libbsd0 \
     # Install tools for building
@@ -27,9 +26,6 @@ RUN apt-get update \
             libmilter-dev \
             libbsd-dev" \
     && apt-get install -y --no-install-recommends --no-install-suggests $buildDeps \
-    # Download libssl1.0.0
-    && curl -fL -o /tmp/libssl1.0.0_amd64.deb http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u12_armhf.deb \
-    && apt install -y /tmp/libssl1.0.0_amd64.deb \
     # Download and prepare OpenDKIM sources
     && curl -fL -o /tmp/opendkim.tar.gz https://downloads.sourceforge.net/project/opendkim/opendkim-2.10.3.tar.gz \
     && (echo "97923e533d072c07ae4d16a46cbed95ee799aa50f19468d8bc6d1dc534025a8616c3b4b68b5842bc899b509349a2c9a67312d574a726b048c0ea46dd4fcc45d8  /tmp/opendkim.tar.gz" | sha512sum -c -) \
@@ -44,6 +40,7 @@ RUN apt-get update \
             --htmldir=/tmp/opendkim/html \
             --infodir=/tmp/opendkim/info \
             --mandir=/tmp/opendkim/man \
+            --disable-shared \
     && make \
     # Create OpenDKIM user and group
     && addgroup --system --gid 91 opendkim \
