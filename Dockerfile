@@ -25,7 +25,8 @@ RUN apt-get update \
     && buildDeps=" \
             libssl-dev \
             libmilter-dev \
-            libbsd-dev" \
+            libbsd-dev \
+            libunbound8" \
     && apt-get install -y --no-install-recommends --no-install-suggests $buildDeps \
     # Download and prepare OpenDKIM sources
     && curl -fL -o /tmp/opendkim.tar.gz https://downloads.sourceforge.net/project/opendkim/opendkim-2.10.3.tar.gz \
