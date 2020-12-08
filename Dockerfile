@@ -19,8 +19,6 @@ RUN apt-get update \
                 libmilter1.0.1 \
                 libbsd0 \
     # Install tools for building
-    && curl -fL -o /tmp/libssl1.0.2_amd64.deb http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u1_amd64.deb\
-    && dpkg -i /tmp/libssl1.0.2_amd64.deb\
     && toolDeps="curl make gcc g++ libc-dev" \
     && apt-get install -y --no-install-recommends --no-install-suggests $toolDeps \
     # Install OpenDKIM build dependencies
@@ -29,6 +27,9 @@ RUN apt-get update \
             libmilter-dev \
             libbsd-dev" \
     && apt-get install -y --no-install-recommends --no-install-suggests $buildDeps \
+    # Download libssl1.0.2
+    && curl -fL -o /tmp/libssl1.0.2_amd64.deb http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u1_amd64.deb\
+    && dpkg -i /tmp/libssl1.0.2_amd64.deb \
     # Download and prepare OpenDKIM sources
     && curl -fL -o /tmp/opendkim.tar.gz https://downloads.sourceforge.net/project/opendkim/opendkim-2.10.3.tar.gz \
     && (echo "97923e533d072c07ae4d16a46cbed95ee799aa50f19468d8bc6d1dc534025a8616c3b4b68b5842bc899b509349a2c9a67312d574a726b048c0ea46dd4fcc45d8  /tmp/opendkim.tar.gz" | sha512sum -c -) \
