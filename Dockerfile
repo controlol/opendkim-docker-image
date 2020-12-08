@@ -3,7 +3,7 @@
 
 # https://hub.docker.com/_/debian
 FROM debian:buster-slim
-
+LABEL Luc Appelman "lucapppelman@gmail.com"
 
 # Build and install OpenDKIM
 RUN apt-get update \
@@ -66,7 +66,6 @@ RUN apt-get update \
             /etc/*/inetutils-syslogd \
             /tmp/*
 
-
 # Install s6-overlay
 RUN apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests curl \
@@ -81,7 +80,6 @@ RUN apt-get update \
 
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     S6_CMD_WAIT_FOR_SERVICES=1
-
 
 COPY rootfs /
 
