@@ -14,54 +14,7 @@ RUN apt-get update \
     && update-ca-certificates \
     # Install OpenDKIM dependencies
     && apt-get install -y --no-install-recommends --no-install-suggests \
-                libssl1.1 \
-                libmilter1.0.1 \
-                libbsd0 \
-                unbound \
-    # Install tools for building
-    && toolDeps="curl make gcc g++ libc-dev" \
-    && apt-get install -y --no-install-recommends --no-install-suggests $toolDeps \
-    # Install OpenDKIM build dependencies
-    && buildDeps=" \
-            libssl-dev \
-            libmilter-dev \
-            libbsd-dev \
-            libunbound8" \
-    && apt-get install -y --no-install-recommends --no-install-suggests $buildDeps \
-    # Download and prepare OpenDKIM sources
-    && curl -fL -o /tmp/opendkim.tar.gz https://downloads.sourceforge.net/project/opendkim/opendkim-2.10.3.tar.gz \
-    && (echo "97923e533d072c07ae4d16a46cbed95ee799aa50f19468d8bc6d1dc534025a8616c3b4b68b5842bc899b509349a2c9a67312d574a726b048c0ea46dd4fcc45d8  /tmp/opendkim.tar.gz" | sha512sum -c -) \
-    && tar -xzf /tmp/opendkim.tar.gz -C /tmp/ \
-    && cd /tmp/opendkim-* \
-    # Build OpenDKIM from sources
-    && ./configure \
-            --prefix=/usr \
-            --sysconfdir=/etc/opendkim \
-            # No documentation included to keep image size smaller
-            --docdir=/tmp/opendkim/doc \
-            --htmldir=/tmp/opendkim/html \
-            --infodir=/tmp/opendkim/info \
-            --mandir=/tmp/opendkim/man \
-            --with-openssl=/usr/local/openssl11 \
-            --with-unbound \
-    && make \
-    # Create OpenDKIM user and group
-    && addgroup --system --gid 91 opendkim \
-    && adduser --system --uid 90 --disabled-password --shell /sbin/nologin \
-                --no-create-home --home /run/opendkim \
-                --ingroup opendkim --gecos opendkim \
                 opendkim \
-    && adduser opendkim mail \
-    # Install OpenDKIM
-    && make install \
-    # Prepare run directory
-    && install -d -o opendkim -g opendkim /run/opendkim/ \
-    # Preserve licenses
-    && install -d /usr/share/licenses/opendkim/ \
-    && mv /tmp/opendkim/doc/LICENSE* \
-        /usr/share/licenses/opendkim/ \
-    # Prepare configuration directories
-    && install -d /etc/opendkim/conf.d/ \
     # Cleanup unnecessary stuff
     && apt-get purge -y --auto-remove \
                 -o APT::AutoRemove::RecommendsImportant=false \
