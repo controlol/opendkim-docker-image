@@ -17,6 +17,7 @@ RUN apt-get update \
                 libssl1.1 \
                 libmilter1.0.1 \
                 libbsd0 \
+                unbound \
     # Install tools for building
     && toolDeps="curl make gcc g++ libc-dev" \
     && apt-get install -y --no-install-recommends --no-install-suggests $toolDeps \
