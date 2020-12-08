@@ -40,7 +40,8 @@ RUN apt-get update \
             --htmldir=/tmp/opendkim/html \
             --infodir=/tmp/opendkim/info \
             --mandir=/tmp/opendkim/man \
-            --disable-shared \
+            --enable-shared --disable-static \
+            --with-openssl=/usr/local/openssl11 \
     && make \
     # Create OpenDKIM user and group
     && addgroup --system --gid 91 opendkim \
