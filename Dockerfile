@@ -53,4 +53,4 @@ STOPSIGNAL SIGTERM
 
 ENTRYPOINT ["/init"]
 
-CMD ["opendkim", "-f"]
+CMD ["opendkim", "-f -D"]
