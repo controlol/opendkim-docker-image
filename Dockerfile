@@ -14,7 +14,7 @@ RUN apt-get update \
     && update-ca-certificates \
     # Install OpenDKIM dependencies
     && apt-get install -y --no-install-recommends --no-install-suggests \
-                libssl1.1 \
+                libssl1.0.2 \
                 libmilter1.0.1 \
                 libbsd0 \
     # Install tools for building
