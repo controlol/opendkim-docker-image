@@ -41,9 +41,8 @@ RUN apt-get update \
             --htmldir=/tmp/opendkim/html \
             --infodir=/tmp/opendkim/info \
             --mandir=/tmp/opendkim/man \
-            --enable-shared --disable-static \
-            --enable-rpath \
             --with-openssl=/usr/local/openssl11 \
+            --with-unbound \
     && make \
     # Create OpenDKIM user and group
     && addgroup --system --gid 91 opendkim \
