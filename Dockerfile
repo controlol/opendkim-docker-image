@@ -14,10 +14,13 @@ RUN apt-get update \
     && update-ca-certificates \
     # Install OpenDKIM dependencies
     && apt-get install -y --no-install-recommends --no-install-suggests \
-                libssl1.0.2 \
+                #newer version does not work with opendkim yet
+                #libssl1.1 \
                 libmilter1.0.1 \
                 libbsd0 \
     # Install tools for building
+    && curl -fL -o /tmp/libssl1.0.2_amd64.deb http://security.debian.org/debian-security/pool/updates/main/o/openssl1.0/libssl1.0.2_1.0.2u-1~deb9u1_amd64.deb\
+    && dpkg -i /tmp/libssl1.0.2_amd64.deb\
     && toolDeps="curl make gcc g++ libc-dev" \
     && apt-get install -y --no-install-recommends --no-install-suggests $toolDeps \
     # Install OpenDKIM build dependencies
